@@ -34,6 +34,9 @@
 
 (export '(write-tap write-tap-to-file))
 
+(defconstant +tap-version+ 13
+  "The version of the TAP protocol to which we adhere.")
+
 (defun run-time-s (test-result)
   "calculate the run-time of the test in seconds"
   (/ (run-time test-result)
@@ -68,7 +71,8 @@ results."
   (check-type test-results test-results-db)
   (let ((i 0)
         (*print-pretty* T))
-    (format stream "TAP version 13~%1..~d~%"
+    (format stream "TAP version ~d~%1..~d~%"
+	    +tap-version+
             (hash-table-count (database test-results)))
     (maphash
      #'(lambda (name test-result)
